@@ -15,7 +15,7 @@ const carSchema = new mongoose.Schema({
     maxlength: 17,
   },
   year: {
-    type: int,
+    type: Number,
     required: true,
   },
   make: {
