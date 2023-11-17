@@ -3,11 +3,12 @@ import { useState } from 'react';
 const LoginForm = () => {
   // Controls whether the form is for login or signup
   const [isLogin, setIsLogin] = useState(true); 
-  
-  const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  });
+
+  const initialFormData = isLogin
+    ? { email: '', password: '' }
+    : { email: '', username: '', password: '', createdOn: new Date().toISOString() };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,6 +16,10 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isLogin) {
+      // Update createdOn timestamp to the current time at the point of submission
+      formData.createdOn = new Date().toISOString();
+    }
     console.log('Form submitted:', formData);
     // Switch between login route vs signup route when form submitted
     const endpoint = isLogin ? '/api/login' : '/api/signup';
@@ -44,13 +49,23 @@ const LoginForm = () => {
       <h2>{isLogin ? 'Login' : 'Signup'}</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="text"
-          name="username"
-          value={formData.username}
+          type="email"
+          name="email"
+          value={formData.email}
           onChange={handleChange}
-          placeholder="Username"
+          placeholder="Email"
           required
         />
+        {!isLogin && (
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            placeholder="Username"
+            required
+          />
+        )}
         <input
           type="password"
           name="password"
@@ -61,8 +76,10 @@ const LoginForm = () => {
         />
         <button type="submit">{isLogin ? 'Login' : 'Signup'}</button>
       </form>
-      {/* Switch Between Login/Signup */}
-      <button onClick={() => setIsLogin(!isLogin)}>
+      <button onClick={() => {
+        setIsLogin(!isLogin);
+        setFormData(initialFormData); // Reset form data when toggling
+      }}>
         {isLogin ? 'Need an account? Signup' : 'Have an account? Login'}
       </button>
     </div>
