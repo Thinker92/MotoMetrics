@@ -1,5 +1,6 @@
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Login from '../components/Login';
 
 const Home = () => {
   return (
@@ -7,7 +8,7 @@ const Home = () => {
       <Header />
       <div className="main-content">
         <h2>Welcome to MotoMetrics!</h2>
-        {/* Add  sign-in/up form here */}
+        <Login />
         {/* Add description and instructions here */}
       </div>
       <Footer />
