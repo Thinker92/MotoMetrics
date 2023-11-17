@@ -1,25 +1,35 @@
 const typeDefs = `
-  type Tech {
-    _id: ID!
-    name: String!
+  type User {
+  _id: ID
+  username: String!
+  email: String!
+  password: String!
+  cars: [Car]
   }
 
-  type Matchup {
-    _id: ID!
-    tech1: String!
-    tech2: String!
-    tech1_votes: Int
-    tech2_votes: Int
+  type Car {
+    _id: ID
+    username: String!
+    vin: String
+    title: String
+    year: Int!
+    make: String!
+    model: String!
   }
 
   type Query {
-    tech: [Tech]
-    matchups(_id: String): [Matchup]
+    users: [User]
+    user(username: String): User
+    cars(username: String): [Car]
+    car(carId: ID!): Car
   }
 
+ 
   type Mutation {
-    createMatchup(tech1: String!, tech2: String!): Matchup
-    createVote(_id: String!, techNum: Int!): Matchup
+    createUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    createCar( vin: String, title: String, year: Int!, make: String!, model: String!): Car
+    removeCar(Car_Id: ID!): Car
   }
 `;
 
