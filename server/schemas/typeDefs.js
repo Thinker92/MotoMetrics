@@ -9,7 +9,7 @@ const typeDefs = `
 
   type Car {
     _id: ID
-    username: String!
+    username: String
     vin: String
     title: String
     year: Int!
