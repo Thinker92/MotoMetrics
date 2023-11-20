@@ -1,5 +1,5 @@
 const { User, Car } = require("../models");
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
@@ -21,7 +21,7 @@ const resolvers = {
     createUser: async (parent, args) => {
       const createdUser = await User.create({ username, email, password });
       const token = signToken(user);
-      return {createdUser, token};
+      return { createdUser, token };
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email });
@@ -40,9 +40,16 @@ const resolvers = {
 
       return { token, user };
     },
-    createCar: async  (parent, { title, vin, year, make, model }, context) => {
+    createCar: async (parent, { title, vin, year, make, model }, context) => {
       if (context.user) {
-        const createdCar = await Car.create({ username: context.user.username, title, vin, year, make, model });
+        const createdCar = await Car.create({
+          username: context.user.username,
+          title,
+          vin,
+          year,
+          make,
+          model,
+        });
 
         await User.findOneAndUpdate(
           { _id: context.user._id },
@@ -52,7 +59,6 @@ const resolvers = {
         return thought;
       }
       throw AuthenticationError;
-    },
     },
     removeCar: async (parent, { Car_Id }, context) => {
       if (context.user) {
