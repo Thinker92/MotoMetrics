@@ -60,22 +60,22 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-    removeCar: async (parent, { Car_Id }, context) => {
-      if (context.user) {
-        const car = await Car.findOneAndDelete({
-          _id: Car_Id,
-          username: context.user.username,
-        });
+  },
+  removeCar: async (parent, { Car_Id }, context) => {
+    if (context.user) {
+      const car = await Car.findOneAndDelete({
+        _id: Car_Id,
+        username: context.user.username,
+      });
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { Cars: car._id } }
-        );
+      await User.findOneAndUpdate(
+        { _id: context.user._id },
+        { $pull: { Cars: car._id } }
+      );
 
-        return Car;
-      }
-      throw AuthenticationError;
-    },
+      return Car;
+    }
+    throw AuthenticationError;
   },
 };
 
