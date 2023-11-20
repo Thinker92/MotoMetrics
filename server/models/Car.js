@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const carSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: true,
   },
   title: {
     type: String,
