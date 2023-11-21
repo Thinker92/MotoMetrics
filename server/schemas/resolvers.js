@@ -16,7 +16,36 @@ const resolvers = {
     car: async (parent, { _id }) => {
       return Car.findOne({ _id });
     },
+    searchCars: async (_, args) => {
+      const queryParams = new URLSearchParams(args).toString();
+      const url = `https://api.api-ninjas.com/v1/cars?${queryParams}`;
+
+      try {
+        const response = await fetch(url, {
+          headers: { 'X-Api-Key': process.env.CARS_API_KEY }
+        });
+        const data = await response.json();
+        return data.map(car => ({
+          make: car.make,
+          model: car.model,
+          fuel_type: car.fuel_type,
+          drive: car.drive,
+          cylinders: car.cylinders,
+          transmission: car.transmission,
+          year: car.year,
+          min_city_mpg: car.min_city_mpg,
+          max_city_mpg: car.max_city_mpg,
+          min_hwy_mpg: car.min_hwy_mpg,
+          max_hwy_mpg: car.max_hwy_mpg,
+          min_comb_mpg: car.min_comb_mpg,
+          max_comb_mpg: car.max_comb_mpg
+        }));
+      } catch (error) {
+        console.error(error);
+        throw new Error('Error fetching data from external API');
+      }},
   },
+
   Mutation: {
     createUser: async (parent, args) => {
       const createdUser = await User.create({ username, email, password });

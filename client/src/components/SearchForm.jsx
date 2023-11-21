@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const SearchForm = () => {
+const SearchForm = ({onSearch}) => {
   const [searchParams, setSearchParams] = useState({
     make: '',
     model: '',
@@ -24,9 +25,7 @@ const SearchForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const queryParams = new URLSearchParams(searchParams).toString();
-    const url = `https://api.api-ninjas.com/v1/cars?${queryParams}`;
-    console.log(url);
+    onSearch(searchParams);
   };
 
   return (
@@ -50,5 +49,9 @@ const SearchForm = () => {
     </form>
   );
 };
+
+SearchForm.propTypes = {
+    onSearch: PropTypes.func.isRequired,
+  };
 
 export default SearchForm;
