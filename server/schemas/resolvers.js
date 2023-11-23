@@ -22,28 +22,24 @@ const resolvers = {
 
       try {
         const response = await fetch(url, {
-          headers: { 'X-Api-Key': process.env.CARS_API_KEY }
+          headers: { "X-Api-Key": process.env.CARS_API_KEY },
         });
         const data = await response.json();
-        return data.map(car => ({
+        return data.map((car) => ({
           make: car.make,
           model: car.model,
           fuel_type: car.fuel_type,
           drive: car.drive,
-          cylinders: car.cylinders,
           transmission: car.transmission,
           year: car.year,
-          min_city_mpg: car.min_city_mpg,
-          max_city_mpg: car.max_city_mpg,
-          min_hwy_mpg: car.min_hwy_mpg,
-          max_hwy_mpg: car.max_hwy_mpg,
           min_comb_mpg: car.min_comb_mpg,
-          max_comb_mpg: car.max_comb_mpg
+          max_comb_mpg: car.max_comb_mpg,
         }));
       } catch (error) {
         console.error(error);
-        throw new Error('Error fetching data from external API');
-      }},
+        throw new Error("Error fetching data from external API");
+      }
+    },
   },
 
   Mutation: {
@@ -69,7 +65,22 @@ const resolvers = {
 
       return { token, user };
     },
-    createCar: async (parent, { title, vin, year, make, model }, context) => {
+    createCar: async (
+      parent,
+      {
+        title,
+        vin,
+        year,
+        make,
+        model,
+        fuel_type,
+        drive,
+        transmission,
+        min_comb_mpg,
+        max_comb_mpg,
+      },
+      context
+    ) => {
       if (context.user) {
         const createdCar = await Car.create({
           username: context.user.username,
@@ -78,6 +89,11 @@ const resolvers = {
           year,
           make,
           model,
+          fuel_type,
+          drive,
+          transmission,
+          min_comb_mpg,
+          max_comb_mpg,
         });
 
         await User.findOneAndUpdate(
@@ -89,22 +105,22 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-  },
-  removeCar: async (parent, { Car_Id }, context) => {
-    if (context.user) {
-      const car = await Car.findOneAndDelete({
-        _id: Car_Id,
-        username: context.user.username,
-      });
+    removeCar: async (parent, { Car_Id }, context) => {
+      if (context.user) {
+        const car = await Car.findOneAndDelete({
+          _id: Car_Id,
+          username: context.user.username,
+        });
 
-      await User.findOneAndUpdate(
-        { _id: context.user._id },
-        { $pull: { Cars: car._id } }
-      );
+        await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { $pull: { Cars: car._id } }
+        );
 
-      return Car;
-    }
-    throw AuthenticationError;
+        return car;
+      }
+      throw AuthenticationError;
+    },
   },
 };
 
