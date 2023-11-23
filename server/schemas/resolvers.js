@@ -16,6 +16,33 @@ const resolvers = {
     car: async (parent, { _id }) => {
       return Car.findOne({ _id });
     },
+
+
+    searchCars: async (_, args) => {
+      const queryParams = new URLSearchParams(args).toString();
+      const url = `https://api.api-ninjas.com/v1/cars?${queryParams}`;
+
+      try {
+        const response = await fetch(url, {
+          headers: { "X-Api-Key": process.env.CARS_API_KEY },
+        });
+        const data = await response.json();
+        return data.map((car) => ({
+          make: car.make,
+          model: car.model,
+          fuel_type: car.fuel_type,
+          drive: car.drive,
+          transmission: car.transmission,
+          year: car.year,
+          min_comb_mpg: car.min_comb_mpg,
+          max_comb_mpg: car.max_comb_mpg,
+        }));
+      } catch (error) {
+        console.error(error);
+        throw new Error("Error fetching data from external API");
+      }
+    },
+
   },
   Mutation: {
     createUser: async (parent, { username, email, password }) => {
@@ -40,7 +67,22 @@ const resolvers = {
 
       return { token, user };
     },
-    createCar: async (parent, { title, vin, year, make, model }, context) => {
+    createCar: async (
+      parent,
+      {
+        title,
+        vin,
+        year,
+        make,
+        model,
+        fuel_type,
+        drive,
+        transmission,
+        min_comb_mpg,
+        max_comb_mpg,
+      },
+      context
+    ) => {
       if (context.user) {
         const createdCar = await Car.create({
           username: context.user.username,
@@ -49,6 +91,11 @@ const resolvers = {
           year,
           make,
           model,
+          fuel_type,
+          drive,
+          transmission,
+          min_comb_mpg,
+          max_comb_mpg,
         });
 
         await User.findOneAndUpdate(
@@ -73,6 +120,7 @@ const resolvers = {
         );
 
         return Car;
+
       }
       throw AuthenticationError;
     },
