@@ -3,9 +3,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App.jsx';
 import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
+// import Dashboard from './pages/Dashboard';
 import Search from './pages/Search';
-import Compare from './pages/Compare';
+// import Compare from './pages/Compare';
 import NotFound from './pages/NotFound';
 
 const router = createBrowserRouter([
@@ -18,18 +18,18 @@ const router = createBrowserRouter([
         index: true,
         element: <Home />
       }, 
-      {
-        path: 'dashboard',
-        element: <Dashboard />
-      }, 
+      // {
+      //   path: 'dashboard',
+      //   element: <Dashboard />
+      // }, 
       {
         path: 'search',
         element: <Search />
       }, 
-      {
-        path: 'compare',
-        element: <Compare />
-      },
+      // {
+      //   path: 'compare',
+      //   element: <Compare />
+      // },
     ],
   },
 ]);

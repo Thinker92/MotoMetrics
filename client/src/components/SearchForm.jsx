@@ -37,10 +37,6 @@ const SearchForm = ({onSearch}) => {
       <input name="cylinders" placeholder="Cylinders (e.g., 4)" onChange={handleChange} type="number" />
       <input name="transmission" placeholder="Transmission (e.g., automatic)" onChange={handleChange} />
       <input name="year" placeholder="Year (e.g., 2020)" onChange={handleChange} type="number" />
-      <input name="min_city_mpg" placeholder="Min City MPG" onChange={handleChange} type="number" />
-      <input name="max_city_mpg" placeholder="Max City MPG" onChange={handleChange} type="number" />
-      <input name="min_hwy_mpg" placeholder="Min Highway MPG" onChange={handleChange} type="number" />
-      <input name="max_hwy_mpg" placeholder="Max Highway MPG" onChange={handleChange} type="number" />
       <input name="min_comb_mpg" placeholder="Min Combined MPG" onChange={handleChange} type="number" />
       <input name="max_comb_mpg" placeholder="Max Combined MPG" onChange={handleChange} type="number" />
       <input name="limit" placeholder="Result Limit (1-50)" onChange={handleChange} type="number" />
