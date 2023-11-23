@@ -48,6 +48,7 @@ const LoginForm = () => {
     <div>
       <h2>{isLogin ? 'Login' : 'Signup'}</h2>
       <form onSubmit={handleSubmit}>
+        {!isLogin && (
         <input
           type="email"
           name="email"
@@ -56,7 +57,7 @@ const LoginForm = () => {
           placeholder="Email"
           required
         />
-        {!isLogin && (
+        )}
           <input
             type="text"
             name="username"
@@ -65,7 +66,6 @@ const LoginForm = () => {
             placeholder="Username"
             required
           />
-        )}
         <input
           type="password"
           name="password"
