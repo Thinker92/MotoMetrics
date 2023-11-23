@@ -25,6 +25,24 @@ const carSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  fuel_type: {
+    type: String,
+    required: true,
+  },
+  drive: {
+    type: String,
+    required: true,
+  },
+  transmission: {
+    type: String,
+    required: true,
+  },
+  min_comb_mpg: {
+    type: Number,
+  },
+  max_comb_mpg: {
+    type: Number,
+  },
 });
 
 const Thought = mongoose.model("Car", carSchema);
