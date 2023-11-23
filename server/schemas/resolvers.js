@@ -16,6 +16,8 @@ const resolvers = {
     car: async (parent, { _id }) => {
       return Car.findOne({ _id });
     },
+
+
     searchCars: async (_, args) => {
       const queryParams = new URLSearchParams(args).toString();
       const url = `https://api.api-ninjas.com/v1/cars?${queryParams}`;
@@ -40,12 +42,12 @@ const resolvers = {
         throw new Error("Error fetching data from external API");
       }
     },
-  },
 
+  },
   Mutation: {
-    createUser: async (parent, args) => {
+    createUser: async (parent, { username, email, password }) => {
       const createdUser = await User.create({ username, email, password });
-      const token = signToken(user);
+      const token = signToken(createdUser);
       return { createdUser, token };
     },
     login: async (parent, { email, password }) => {
@@ -117,7 +119,8 @@ const resolvers = {
           { $pull: { Cars: car._id } }
         );
 
-        return car;
+        return Car;
+
       }
       throw AuthenticationError;
     },
