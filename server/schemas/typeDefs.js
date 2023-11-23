@@ -15,20 +15,9 @@ const typeDefs = `
     year: Int
     make: String
     model: String
-  }
-
-  type ExternalCar {
-    make: String
-    model: String
     fuel_type: String
     drive: String
-    cylinders: Int
     transmission: String
-    year: Int
-    min_city_mpg: Int
-    max_city_mpg: Int
-    min_hwy_mpg: Int
-    max_hwy_mpg: Int
     min_comb_mpg: Int
     max_comb_mpg: Int
   }
@@ -38,7 +27,7 @@ const typeDefs = `
     user(username: String): User
     cars(username: String): [Car]!
     car(carId: ID!): Car
-    searchCars(make: String, model: String, fuel_type: String, drive: String, cylinders: Int, transmission: String, year: Int, min_city_mpg: Int, max_city_mpg: Int, min_hwy_mpg: Int, max_hwy_mpg: Int, min_comb_mpg: Int, max_comb_mpg: Int, limit: Int): [ExternalCar]
+    searchCars(make: String, model: String, fuel_type: String, drive: String, transmission: String, year: Int, min_comb_mpg: Int, max_comb_mpg: Int, limit: Int): [ExternalCar]
   }
 
  
