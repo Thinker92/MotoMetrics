@@ -8,9 +8,9 @@ const SearchForm = ({ onSearch }) => {
     fuel_type: "",
     drive: "",
     transmission: "",
-    year: "",
-    min_comb_mpg: "",
-    max_comb_mpg: "",
+    year: 1920,
+    min_comb_mpg: 10,
+    max_comb_mpg: 10,
   });
 
   const handleChange = (e) => {
@@ -64,12 +64,6 @@ const SearchForm = ({ onSearch }) => {
       <input
         name="max_comb_mpg"
         placeholder="Max Combined MPG"
-        onChange={handleChange}
-        type="number"
-      />
-      <input
-        name="limit"
-        placeholder="Result Limit (1-50)"
         onChange={handleChange}
         type="number"
       />

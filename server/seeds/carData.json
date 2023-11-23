@@ -1,9 +1,41 @@
 [
   {
-    "vin": "1FMCU0C76AKA05313",
+    "username": "user1",
     "title": "Bertha",
-    "year": "2015",
+    "vin": "1FMCU0C76AKA05313",
+    "year": 2015,
     "make": "GMC",
-    "model": "Hummer"
+    "model": "Hummer",
+    "fuel_type": "gas",
+    "drive": "4wd",
+    "transmission": "automatic",
+    "min_comb_mpg": 20,
+    "max_comb_mpg": 25
+  },
+  {
+    "username": "user2",
+    "title": "Blue Lightning",
+    "vin": "2T3ZFREV5FW123456",
+    "year": 2018,
+    "make": "Toyota",
+    "model": "RAV4",
+    "fuel_type": "gas",
+    "drive": "fwd",
+    "transmission": "manual",
+    "min_comb_mpg": 22,
+    "max_comb_mpg": 28
+  },
+  {
+    "username": "user3",
+    "title": "Green Arrow",
+    "vin": "1HGCR2F51FA987654",
+    "year": 2020,
+    "make": "Honda",
+    "model": "Accord",
+    "fuel_type": "electric",
+    "drive": "awd",
+    "transmission": "automatic",
+    "min_comb_mpg": 25,
+    "max_comb_mpg": 30
   }
 ]

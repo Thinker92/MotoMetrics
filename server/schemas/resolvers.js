@@ -17,14 +17,16 @@ const resolvers = {
       return Car.findOne({ _id });
     },
     searchCars: async (_, args) => {
+      console.log(args);
       const queryParams = new URLSearchParams(args).toString();
-      const url = `https://api.api-ninjas.com/v1/cars?${queryParams}`;
+      const url = `https://api.api-ninjas.com/v1/cars?make=honda&limit=1`;
 
       try {
         const response = await fetch(url, {
           headers: { "X-Api-Key": process.env.CARS_API_KEY },
         });
         const data = await response.json();
+        console.log(data);
         return data.map((car) => ({
           make: car.make,
           model: car.model,
