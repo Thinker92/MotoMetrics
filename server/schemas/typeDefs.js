@@ -27,7 +27,7 @@ const typeDefs = `
     user(username: String): User
     cars(username: String): [Car]!
     car(carId: ID!): Car
-    searchCars(make: String, model: String, fuel_type: String, drive: String, transmission: String, year: Int, min_comb_mpg: Int, max_comb_mpg: Int, limit: Int): [ExternalCar]
+    searchCars(make: String, model: String, fuel_type: String, drive: String, transmission: String, year: Int, min_comb_mpg: Int, max_comb_mpg: Int, limit: Int): [Car]
   }
 
  

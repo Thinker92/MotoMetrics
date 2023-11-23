@@ -9,6 +9,6 @@ db.once("open", async () => {
 
   await Car.insertMany(carData);
 
-  console.log("Technologies seeded!");
+  console.log("successfully seeded");
   process.exit(0);
 });
