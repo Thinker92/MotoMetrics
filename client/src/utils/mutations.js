@@ -25,14 +25,17 @@ export const LOGIN_USER = gql`
 `;
 
 export const CREATE_CAR = gql`
-  mutation createCar($title: String!, $vin: String!, $year: Int!, $make: String!, $model: String!) {
-    createCar(title: $title, vin: $vin, year: $year, make: $make, model: $model) {
+  mutation createCar($year: Int, $make: String, $model: String, $fuel_type: String, $drive: String, $transmission: String, $min_comb_mpg: Int, $max_comb_mpg: Int) {
+    createCar(year: $year, make: $make, model: $model, fuel_type: $fuel_type, drive: $drive, transmission: $transmission, min_comb_mpg: $min_comb_mpg, max_comb_mpg: $max_comb_mpg) {
       _id
-      title
-      vin
       year
       make
       model
+      fuel_type
+      drive
+      transmission
+      min_comb_mpg
+      max_comb_mpg
     }
   }
 `;
@@ -41,11 +44,14 @@ export const REMOVE_CAR = gql`
   mutation removeCar($Car_Id: ID!) {
     removeCar(Car_Id: $Car_Id) {
       _id
-      title
-      vin
       year
       make
       model
+      fuel_type
+      drive
+      transmission
+      min_comb_mpg
+      max_comb_mpg
     }
   }
 `;

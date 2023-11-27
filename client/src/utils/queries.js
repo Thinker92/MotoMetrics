@@ -9,11 +9,14 @@ export const QUERY_USERS = gql`
       email
       cars {
         _id
-        title
-        vin
         year
         make
         model
+        fuel_type
+        drive
+        transmission
+        min_comb_mpg
+        max_comb_mpg
       }
     }
   }
@@ -27,11 +30,14 @@ export const QUERY_USER = gql`
       email
       cars {
         _id
-        title
-        vin
         year
         make
         model
+        fuel_type
+        drive
+        transmission
+        min_comb_mpg
+        max_comb_mpg
       }
     }
   }
@@ -41,11 +47,14 @@ export const QUERY_CARS = gql`
   query cars($username: String) {
     cars(username: $username) {
       _id
-      title
-      vin
       year
       make
       model
+      fuel_type
+      drive
+      transmission
+      min_comb_mpg
+      max_comb_mpg
     }
   }
 `;
@@ -54,11 +63,14 @@ export const QUERY_CAR = gql`
   query car($carId: ID!) {
     car(carId: $carId) {
       _id
-      title
-      vin
       year
       make
       model
+      fuel_type
+      drive
+      transmission
+      min_comb_mpg
+      max_comb_mpg
     }
   }
 `;

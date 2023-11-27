@@ -33,9 +33,14 @@ const typeDefs = `
  
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): User
-    createCar( vin: String, title: String, year: Int!, make: String!, model: String!): Car
+    login(email: String!, password: String!): AuthPayload
+    createCar(vin: String, title: String, year: Int, make: String, model: String, fuel_type: String, drive: String, transmission: String, min_comb_mpg: Int, max_comb_mpg: Int): Car
     removeCar(Car_Id: ID!): Car
+  }
+
+  type AuthPayload {
+    token: String
+    user: User
   }
 `;
 

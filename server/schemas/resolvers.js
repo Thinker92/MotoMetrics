@@ -106,12 +106,8 @@ const resolvers = {
           max_comb_mpg,
         });
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { thoughts: thought._id } }
-        );
-
-        return thought;
+        await User.findByIdAndUpdate(context.user._id, { $push: { cars: car._id } });
+      return car;
       }
       throw AuthenticationError;
     },
