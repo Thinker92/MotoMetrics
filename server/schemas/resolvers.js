@@ -17,16 +17,24 @@ const resolvers = {
       return Car.findOne({ _id });
     },
     searchCars: async (_, args) => {
-      console.log(args);
-      const queryParams = new URLSearchParams(args).toString();
-      const url = `https://api.api-ninjas.com/v1/cars?make=honda&limit=1`;
+      // Filter out empty or undefined parameters
+      const validParams = Object.entries(args).reduce((acc, [key, value]) => {
+        if (value) {
+          acc[key] = value;
+        }
+        return acc;
+      }, {});
+
+      const queryParams = new URLSearchParams(validParams).toString();
+      console.log(`queryParams: ${queryParams}`);
+      const url = `https://api.api-ninjas.com/v1/cars?${queryParams}`;
 
       try {
         const response = await fetch(url, {
           headers: { "X-Api-Key": process.env.CARS_API_KEY },
         });
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         return data.map((car) => ({
           make: car.make,
           model: car.model,

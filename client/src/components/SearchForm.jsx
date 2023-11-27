@@ -8,9 +8,9 @@ const SearchForm = ({ onSearch }) => {
     fuel_type: "",
     drive: "",
     transmission: "",
-    year: 1920,
-    min_comb_mpg: 10,
-    max_comb_mpg: 10,
+    year: "",
+    min_comb_mpg: "",
+    max_comb_mpg: "",
   });
 
   const handleChange = (e) => {
@@ -19,7 +19,15 @@ const SearchForm = ({ onSearch }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    onSearch(searchParams);
+    // Filter out empty strings and convert numbers
+    const filteredParams = Object.entries(searchParams).reduce((acc, [key, value]) => {
+      if (value) {
+        acc[key] = (key === "year" || key === "min_comb_mpg" || key === "max_comb_mpg") ? parseInt(value) : value;
+      }
+      return acc;
+    }, {});
+
+    onSearch(filteredParams);
   };
 
   return (
