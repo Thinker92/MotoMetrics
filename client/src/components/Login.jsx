@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { CREATE_USER, LOGIN_USER } from '../utils/mutations';
+import Auth from '../utils/auth';
 
 const LoginForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,7 +10,7 @@ const LoginForm = () => {
 
 
   const initialFormData = isLogin
-    ? { email: '', password: '' }
+    ? { username: '', password: '' }
     : { email: '', username: '', password: '', createdOn: new Date().toISOString() };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -22,9 +23,12 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       if (isLogin) {
-        const { data } = await loginUser({ variables: { email: formData.email, password: formData.password }});
+        const user  = await loginUser({ variables: { username: formData.username, password: formData.password }});
+        const token =user.data.login.token;
+        Auth.login(token);
+        console.log(user);
 
-        console.log(`Successfully Logged in: ${data}`)
+       
       } else {
         const { data } = await createUser({ variables: { username: formData.username, email: formData.email, password: formData.password }});
 
