@@ -17,7 +17,6 @@ const resolvers = {
       return Car.findOne({ _id });
     },
 
-
     searchCars: async (_, args) => {
       // Filter out empty or undefined parameters
       const validParams = Object.entries(args).reduce((acc, [key, value]) => {
@@ -52,7 +51,6 @@ const resolvers = {
         throw new Error("Error fetching data from external API");
       }
     },
-
   },
   Mutation: {
     createUser: async (parent, { username, email, password }) => {
@@ -60,8 +58,8 @@ const resolvers = {
       const token = signToken(createdUser);
       return { createdUser, token };
     },
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({ username });
 
       if (!user) {
         throw AuthenticationError;
@@ -130,7 +128,6 @@ const resolvers = {
         );
 
         return Car;
-
       }
       throw AuthenticationError;
     },
