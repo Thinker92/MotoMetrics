@@ -20,6 +20,7 @@ const typeDefs = `
     transmission: String
     min_comb_mpg: Int
     max_comb_mpg: Int
+
   }
 
   type Query {
@@ -28,13 +29,14 @@ const typeDefs = `
     cars(username: String): [Car]!
     car(carId: ID!): Car
     searchCars(make: String, model: String, fuel_type: String, drive: String, transmission: String, year: Int, min_comb_mpg: Int, max_comb_mpg: Int, limit: Int): [Car]
+
   }
 
  
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): AuthPayload
-    createCar(vin: String, title: String, year: Int, make: String, model: String, fuel_type: String, drive: String, transmission: String, min_comb_mpg: Int, max_comb_mpg: Int): Car
+    login(username: String!, password: String!): User
+    createCar( vin: String, title: String, year: Int!, make: String!, model: String!): Car
     removeCar(Car_Id: ID!): Car
   }
 

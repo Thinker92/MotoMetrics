@@ -16,6 +16,7 @@ const resolvers = {
     car: async (parent, { _id }) => {
       return Car.findOne({ _id });
     },
+
     searchCars: async (_, args) => {
       // Filter out empty or undefined parameters
       const validParams = Object.entries(args).reduce((acc, [key, value]) => {
@@ -51,15 +52,14 @@ const resolvers = {
       }
     },
   },
-
   Mutation: {
     createUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
-      const token = signToken(user);
-      return { token, user };
+      const createdUser = await User.create({ username, email, password });
+      const token = signToken(createdUser);
+      return { createdUser, token };
     },
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+    login: async (parent, { username, password }) => {
+      const user = await User.findOne({ username });
 
       if (!user) {
         throw AuthenticationError;
@@ -123,7 +123,7 @@ const resolvers = {
           { $pull: { Cars: car._id } }
         );
 
-        return car;
+        return Car;
       }
       throw AuthenticationError;
     },
