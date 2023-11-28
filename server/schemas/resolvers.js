@@ -88,32 +88,27 @@ const resolvers = {
         transmission,
         min_comb_mpg,
         max_comb_mpg,
-      },
-      context
-    ) => {
-      if (context.user) {
-        const createdCar = await Car.create({
-          username: context.user.username,
-          title,
-          vin,
-          year,
-          make,
-          model,
-          fuel_type,
-          drive,
-          transmission,
-          min_comb_mpg,
-          max_comb_mpg,
-        });
-
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { thoughts: thought._id } }
-        );
-
-        return thought;
       }
-      throw AuthenticationError;
+    ) => {
+      const createdCar = await Car.create({
+        title,
+        vin,
+        year,
+        make,
+        model,
+        fuel_type,
+        drive,
+        transmission,
+        min_comb_mpg,
+        max_comb_mpg,
+      });
+
+      await User.findOneAndUpdate(
+        { _id: "655ec144cfb2a6a7a48a423f" },
+        { $addToSet: { cars: createdCar._id } }
+      );
+
+      return createdCar;
     },
     removeCar: async (parent, { Car_Id }, context) => {
       if (context.user) {
