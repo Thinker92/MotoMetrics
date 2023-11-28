@@ -62,12 +62,14 @@ const resolvers = {
       const user = await User.findOne({ username });
 
       if (!user) {
+        console.log("Wrong Username)")
         throw AuthenticationError;
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
+        console.log("Wrong Password")
         throw AuthenticationError;
       }
 
@@ -103,10 +105,11 @@ const resolvers = {
         max_comb_mpg,
       });
 
-      await User.findOneAndUpdate(
-        { _id: "655ec144cfb2a6a7a48a423f" },
-        { $addToSet: { cars: createdCar._id } }
-      );
+
+        await User.findByIdAndUpdate(context.user._id, { $push: { cars: car._id } });
+      return car;
+      }
+      throw AuthenticationError;
 
       return createdCar;
     },

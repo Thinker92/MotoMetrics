@@ -39,6 +39,11 @@ const typeDefs = `
     createCar( vin: String, title: String, year: Int!, make: String!, model: String!): Car
     removeCar(Car_Id: ID!): Car
   }
+
+  type AuthPayload {
+    token: ID
+    user: User
+  }
 `;
 
 module.exports = typeDefs;
