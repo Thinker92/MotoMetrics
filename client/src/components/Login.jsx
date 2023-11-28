@@ -1,8 +1,12 @@
 import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { CREATE_USER, LOGIN_USER } from '../utils/mutations';
 
 const LoginForm = () => {
-  // Controls whether the form is for login or signup
-  const [isLogin, setIsLogin] = useState(true); 
+  const [isLogin, setIsLogin] = useState(true);
+  const [createUser, { loading: createUserLoading, error: createUserError }] = useMutation(CREATE_USER);
+  const [loginUser, { loading: loginUserLoading, error: loginUserError }] = useMutation(LOGIN_USER);
+
 
   const initialFormData = isLogin
     ? { email: '', password: '' }
@@ -16,31 +20,19 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!isLogin) {
-      // Update createdOn timestamp to the current time at the point of submission
-      formData.createdOn = new Date().toISOString();
-    }
-    console.log('Form submitted:', formData);
-    // Switch between login route vs signup route when form submitted
-    const endpoint = isLogin ? '/api/login' : '/api/signup';
     try {
-        const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-        });
+      if (isLogin) {
+        const { data } = await loginUser({ variables: { email: formData.email, password: formData.password }});
 
-        const data = await response.json();
-        if (response.ok) {
-        // Handle successful authentication
-        console.log('Success:', data);
-        // Save token, update user state, redirect, etc.
-        } else {
-        // Handle errors
-        console.error('Error:', data);
-        }
+        console.log(`Successfully Logged in: ${data}`)
+      } else {
+        const { data } = await createUser({ variables: { username: formData.username, email: formData.email, password: formData.password }});
+
+        console.log(`Successfully Signed up: ${data}`)
+        console.log(data)
+      }
     } catch (error) {
-        console.error('Request failed:', error);
+      console.error('Error:', error);
     }
   };
 
@@ -82,6 +74,10 @@ const LoginForm = () => {
       }}>
         {isLogin ? 'Need an account? Signup' : 'Have an account? Login'}
       </button>
+      {createUserLoading && <p>Creating user...</p>}
+      {loginUserLoading && <p>Logging in...</p>}
+      {createUserError && <p>Error creating user: {createUserError.message}</p>}
+      {loginUserError && <p>Error logging in: {loginUserError.message}</p>}
     </div>
   );
 };
