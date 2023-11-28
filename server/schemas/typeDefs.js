@@ -35,7 +35,7 @@ const typeDefs = `
  
   type Mutation {
     createUser(username: String!, email: String!, password: String!): User
-    login(email: String!, password: String!): User
+    login(username: String!, password: String!): User
     createCar( vin: String, title: String, year: Int!, make: String!, model: String!): Car
     removeCar(Car_Id: ID!): Car
   }
