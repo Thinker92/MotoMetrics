@@ -90,28 +90,28 @@ const resolvers = {
         transmission,
         min_comb_mpg,
         max_comb_mpg,
-      },
-      context
+      }
     ) => {
-      if (context.user) {
-        const createdCar = await Car.create({
-          username: context.user.username,
-          title,
-          vin,
-          year,
-          make,
-          model,
-          fuel_type,
-          drive,
-          transmission,
-          min_comb_mpg,
-          max_comb_mpg,
-        });
+      const createdCar = await Car.create({
+        title,
+        vin,
+        year,
+        make,
+        model,
+        fuel_type,
+        drive,
+        transmission,
+        min_comb_mpg,
+        max_comb_mpg,
+      });
+
 
         await User.findByIdAndUpdate(context.user._id, { $push: { cars: car._id } });
       return car;
       }
       throw AuthenticationError;
+
+      return createdCar;
     },
     removeCar: async (parent, { Car_Id }, context) => {
       if (context.user) {
