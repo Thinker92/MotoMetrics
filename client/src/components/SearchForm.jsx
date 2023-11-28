@@ -19,7 +19,15 @@ const SearchForm = ({ onSearch }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    onSearch(searchParams);
+    // Filter out empty strings and convert numbers
+    const filteredParams = Object.entries(searchParams).reduce((acc, [key, value]) => {
+      if (value) {
+        acc[key] = (key === "year" || key === "min_comb_mpg" || key === "max_comb_mpg") ? parseInt(value) : value;
+      }
+      return acc;
+    }, {});
+
+    onSearch(filteredParams);
   };
 
   return (
@@ -64,12 +72,6 @@ const SearchForm = ({ onSearch }) => {
       <input
         name="max_comb_mpg"
         placeholder="Max Combined MPG"
-        onChange={handleChange}
-        type="number"
-      />
-      <input
-        name="limit"
-        placeholder="Result Limit (1-50)"
         onChange={handleChange}
         type="number"
       />

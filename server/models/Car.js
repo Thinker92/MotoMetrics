@@ -15,27 +15,27 @@ const carSchema = new mongoose.Schema({
   },
   year: {
     type: Number,
-    required: true,
+    // required: true,
   },
   make: {
     type: String,
-    required: true,
+    // required: true,
   },
   model: {
     type: String,
-    required: true,
+    // required: true,
   },
   fuel_type: {
     type: String,
-    required: true,
+    // required: true,
   },
   drive: {
     type: String,
-    required: true,
+    // required: true,
   },
   transmission: {
     type: String,
-    required: true,
+    // required: true,
   },
   min_comb_mpg: {
     type: Number,
