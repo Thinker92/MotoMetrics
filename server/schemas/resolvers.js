@@ -90,7 +90,8 @@ const resolvers = {
         transmission,
         min_comb_mpg,
         max_comb_mpg,
-      }
+      },
+      context
     ) => {
       const createdCar = await Car.create({
         title,
@@ -105,13 +106,11 @@ const resolvers = {
         max_comb_mpg,
       });
 
-
-        await User.findByIdAndUpdate(context.user._id, { $push: { cars: car._id } });
-      return car;
+      if (context.user) {
+        await User.findByIdAndUpdate(context.user._id, { $push: { cars: createdCar._id } });
+        return createdCar;
       }
-      throw AuthenticationError;
-
-      return createdCar;
+      throw new AuthenticationError("User not authenticated");
     },
     removeCar: async (parent, { Car_Id }, context) => {
       if (context.user) {
